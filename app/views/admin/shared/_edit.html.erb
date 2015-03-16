@@ -3,9 +3,9 @@
 
 <%= render :partial => "form" %>
 
+
+<% end %>
+
 <% if @user.admin? %>
 	<%= render :partial => "merge_article" %>
 <% end %>
-
-<% end %>
-
