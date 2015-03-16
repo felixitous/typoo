@@ -1,3 +1,7 @@
+----- Local ------
 Login: admin
-
 Password: 55m47rg
+
+----- Heroku ------
+Login: admin
+Password: J8iGHZv
