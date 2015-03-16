@@ -74,7 +74,11 @@ class Article < Content
   def merge_data(article)
     # m_article = Article.new(self.attributes.except('guid','permalink'));
     self.body = self.body + "\n" + article.body
-    self.comments = self.comments + article.comments
+    # comments = Comment.where('article_id in (?)', [article.id])
+    comments = Comment.where(:article_id => article.id)
+    comments.each do |comment|
+      self.comments << Comment.new(comment.attributes.except('article_id'))
+    end
     self.save!
     article.destroy
   end
