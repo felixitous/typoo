@@ -74,7 +74,7 @@ class Article < Content
   def merge_data(article)
     # m_article = Article.new(self.attributes.except('guid','permalink'));
     self.body = self.body + "\n" + article.body
-    self.comments += article.comments
+    self.comments = self.comments + article.comments
     self.save!
     article.destroy
   end
