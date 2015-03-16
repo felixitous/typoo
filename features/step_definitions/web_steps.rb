@@ -41,6 +41,39 @@ Given /^the blog is set up$/ do
                 :profile_id => 1,
                 :name => 'admin',
                 :state => 'active'})
+
+  Article.create(:allow_comments => true,
+                 :allow_pings => true,
+                 :author => "non-admin",
+                 :body => 'ayy lmao ayy lmao',
+                 :id => 3,
+                 :permalink => "hello",
+                 :post_type => "read",
+                 :published => true,
+                 :published_at => "2012-08-20 21:51:55 UTC",
+                 :settings => {"password"=>""},
+                 :state => "published",
+                 :text_filter_id => 5,
+                 :title => 'Ayy LMAO',
+                 :type => "Article",
+                 :user_id => 1)
+
+    Article.create(:allow_comments => true,
+                 :allow_pings => true,
+                 :author => "non-admin",
+                 :body => 'Angela laughs really loud',
+                 :id => 4,
+                 :permalink => "hello",
+                 :post_type => "read",
+                 :published => true,
+                 :published_at => "2012-08-20 21:51:55 UTC",
+                 :settings => {"password"=>""},
+                 :state => "published",
+                 :text_filter_id => 5,
+                 :title => 'Blue Door',
+                 :type => "Article",
+                 :user_id => 1)
+
 end
 
 And /^I am logged into the admin panel$/ do

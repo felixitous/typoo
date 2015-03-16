@@ -4,7 +4,21 @@ module Admin; end
 class Admin::ContentController < Admin::BaseController
   layout "administration", :except => [:show, :autosave]
 
+
   cache_sweeper :blog_sweeper
+
+
+  def merge
+    other_article = Article.find(params[:merge_with])
+    if other_article
+      Article.find(params[:id]).merge_data(other_article)
+      flash[:notice] = "Article has been successfully merged"
+      redirect_to admin_content_path
+    else
+      flash[:notice] = "Cannot merge with given article"
+    end
+
+  end
 
   def auto_complete_for_article_keywords
     @items = Tag.find_with_char params[:article][:keywords].strip
@@ -12,8 +26,8 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def index
+    @user = current_user
     @search = params[:search] ? params[:search] : {}
-    
     @articles = Article.search_with_pagination(@search, {:page => params[:page], :per_page => this_blog.admin_display_elements})
 
     if request.xhr?
@@ -24,10 +38,16 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
-    new_or_edit
+    @user = current_user
+    if params[:merge]
+      merge
+    else
+      new_or_edit
+    end
   end
 
   def edit
+    @user = current_user
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
       redirect_to :action => 'index'
