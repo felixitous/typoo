@@ -75,8 +75,8 @@ class Article < Content
     m_article = Article.new(self.attributes.except('guid','permalink'));
     m_article.body = self.body + "\n" + article.body
     m_article.save
-    m_article.comments << self.comments
-    m_article.comments << article.comments
+    m_article.comments += self.comments
+    m_article.comments += article.comments
     article.destroy
     self.destroy
   end
